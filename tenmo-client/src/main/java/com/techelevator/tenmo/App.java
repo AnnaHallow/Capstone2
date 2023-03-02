@@ -8,17 +8,12 @@ import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
 import com.techelevator.util.BasicLogger;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class App {
@@ -76,13 +71,15 @@ public class App {
         currentUser = authenticationService.login(credentials);
         if (currentUser == null) {
             consoleService.printErrorMessage();
-        }
-        try {
-            currentAccount = restTemplate.getForObject(API_BASE_URL + "account/getaccount/" + currentUser.getUser().getId(), Account.class);
-        } catch (RestClientResponseException e) {
-            BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
-        } catch (ResourceAccessException e) {
-            BasicLogger.log(e.getMessage());
+        } else {
+            try {
+                currentAccount = restTemplate.getForObject(API_BASE_URL + "account/getaccount/" + currentUser.getUser().getId(), Account.class);
+            } catch (RestClientResponseException e) {
+                BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
+            } catch (ResourceAccessException e) {
+                BasicLogger.log(e.getMessage());
+            }
+
         }
     }
 
@@ -148,13 +145,19 @@ public class App {
         //Not sure if that is the right call 'accountId/ account_id", also not sure how to call the transfers themselves.
         //Send accountId/ account_id
         //Will require checking accountTo and accountFrom
-        ResponseEntity<List<Transfer>> responseEntity = restTemplate.exchange(
-                API_BASE_URL + "/history/" + currentAccount.getAccountId(), HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Transfer>>(){});
+        ResponseEntity<List<Transfer>> transferResponse =
+                restTemplate.exchange(API_BASE_URL + "transfer/history/" + currentAccount.getAccountId(),
+                        HttpMethod.GET, null, new ParameterizedTypeReference<List<Transfer>>() {
+                        });
+        List<Transfer> transfers = transferResponse.getBody();
 
-        List<Transfer> transfers = responseEntity.getBody();
-
-        System.out.println(transfers);
+        if(transfers != null && !transfers.isEmpty()) {
+            for (Transfer x : transfers) {
+                System.out.println(x.toString());
+            }
+        }else {
+            System.out.println("no transactions found");
+        }
 	}
 
     //Anne

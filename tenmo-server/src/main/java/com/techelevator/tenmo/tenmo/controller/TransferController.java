@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/transfer")
+@RequestMapping(value = "/transfer")
 public class TransferController {
 
 	TransferService transferService;
