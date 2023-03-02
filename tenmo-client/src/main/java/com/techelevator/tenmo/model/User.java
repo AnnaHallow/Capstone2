@@ -38,4 +38,12 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, username);
     }
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                '}';
+    }
 }
