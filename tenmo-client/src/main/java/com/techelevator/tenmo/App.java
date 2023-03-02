@@ -1,18 +1,37 @@
 package com.techelevator.tenmo;
 
+import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
+import com.techelevator.util.BasicLogger;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientResponseException;
+import org.springframework.web.client.RestTemplate;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public class App {
 
     private static final String API_BASE_URL = "http://localhost:8080/";
 
     private final ConsoleService consoleService = new ConsoleService();
+    private RestTemplate restTemplate = new RestTemplate();
     private final AuthenticationService authenticationService = new AuthenticationService(API_BASE_URL);
 
     private AuthenticatedUser currentUser;
+    private Account currentAccount;
+
 
     public static void main(String[] args) {
         App app = new App();
@@ -58,6 +77,13 @@ public class App {
         if (currentUser == null) {
             consoleService.printErrorMessage();
         }
+        try {
+            currentAccount = restTemplate.getForObject(API_BASE_URL + "account/getaccount/" + currentUser.getUser().getId(), Account.class);
+        } catch (RestClientResponseException e) {
+            BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
+        } catch (ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
     }
 
     private void mainMenu() {
@@ -84,28 +110,90 @@ public class App {
         }
     }
 
-	private void viewCurrentBalance() {
-		// TODO Auto-generated method stub
-		
-	}
+    //Anne
 
+	private void viewCurrentBalance() {
+        // TODO Auto-generated method stub
+        // What we are pulling from the API and what we are providing
+        // to get it
+        //Need: Current Balance from the Account Table
+        //Send accountId / account_id
+
+//        Account currentBal = null;
+//        try {
+//            currentBal = restTemplate.getForObject(API_BASE_URL + "account/getaccount/" + currentUser.getUser().getId(), Account.class);
+//
+//        } catch (RestClientResponseException e) {
+//            BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
+//        } catch (ResourceAccessException e) {
+//            BasicLogger.log(e.getMessage());
+//        }
+//        if (currentBal != null) {
+//            System.out.println("Current Balance: " + currentBal.getBalance());
+//        }
+//        if (currentBal == null) {
+//            System.out.println("Null");
+//        }
+        if (currentAccount.getBalance() != null) {
+            System.out.println("Current Balance: " + currentAccount.getBalance());
+        }
+    }
+
+    //Sophie
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub
-		
+		//Need a List<Transfer> from API
+//        List<Transfer> transfers = restTemplate.exchange(
+//                API_BASE_URL + "/history/" + currentAccount.getAccountId(), List<>.class);
+        //Not sure if that is the right call 'accountId/ account_id", also not sure how to call the transfers themselves.
+        //Send accountId/ account_id
+        //Will require checking accountTo and accountFrom
+        ResponseEntity<List<Transfer>> responseEntity = restTemplate.exchange(
+                API_BASE_URL + "/history/" + currentAccount.getAccountId(), HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<Transfer>>(){});
+
+        List<Transfer> transfers = responseEntity.getBody();
+
+        System.out.println(transfers);
 	}
 
+    //Anne
 	private void viewPendingRequests() {
 		// TODO Auto-generated method stub
-		
+		/*
+		* Need List<Transfer> where transferStatusId = 1
+		* Send accountId / account_id
+		* */
+
 	}
 
+
+
+
+    
+    //Sophie
 	private void sendBucks() {
 		// TODO Auto-generated method stub
+        /* reducing current account
+            increasing receiving
+            Need: Void
+            Send Current accountId
+                Receiving   accountId
+                amount being sent
+         */
+
 		
 	}
 
+    //Anne
 	private void requestBucks() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generate d method stub
+        /*
+        Need: Void
+        Send Current accountId
+                requested   accountId
+                amount being being requested
+         */
 		
 	}
 

@@ -5,21 +5,90 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e24f41f9-d5f3-431c-bb1e-70d63f71215e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_10_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_10_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_10_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_findbugs_jsr305_1_3_9.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_errorprone_error_prone_annotations_2_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_25_0_jre.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_j2objc_j2objc_annotations_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_squareup_okhttp3_okhttp_3_11_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_squareup_okio_okio_1_14_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_cucumber_cucumber_core_5_6_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_cucumber_cucumber_expressions_8_3_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_cucumber_cucumber_gherkin_5_6_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_cucumber_cucumber_gherkin_vintage_5_6_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_cucumber_cucumber_java_5_6_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_cucumber_cucumber_plugin_5_6_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_cucumber_datatable_3_3_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_cucumber_docstring_5_6_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_cucumber_tag_expressions_2_0_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_8_15.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_exec_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcprov_jdk16_1_46.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_checkerframework_checker_compat_qual_2_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_mojo_animal_sniffer_annotations_1_14.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_2_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_2_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_all_1_10_19.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_api_3_141_59.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_chrome_driver_3_141_59.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_edge_driver_3_141_59.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_firefox_driver_3_141_59.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_ie_driver_3_141_59.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_java_3_141_59.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_opera_driver_3_141_59.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_remote_driver_3_141_59.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_safari_driver_3_141_59.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_support_3_141_59.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_5_2_6_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_2_6_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_5_2_6_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_5_2_6_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_5_2_6_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/AuthenticatedUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/AuthenticatedUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/Transfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/Transfer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/TransferStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/TransferStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/TransferType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/TransferType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/UserCredentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techelevator/tenmo/model/UserCredentials.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techelevator/tenmo/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/TenmoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/tenmo/TenmoApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/tenmo/Controller/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/dao/JdbcUserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/tenmo/dao/JdbcUserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/tenmo/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/model/Authority.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/tenmo/model/Authority.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/model/LoginDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/tenmo/model/LoginDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/model/LoginResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/tenmo/model/LoginResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/model/RegisterUserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/tenmo/model/RegisterUserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/tenmo/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/security/JwtAccessDeniedHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/security/JwtAuthenticationEntryPoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/security/SecurityUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/security/UserModelDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/security/UserNotActivatedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/security/WebSecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/security/jwt/JWTConfigurer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/security/jwt/JWTFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/java/com/techelevator/tenmo/security/jwt/TokenProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../tenmo-server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/dao/BaseDaoTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/dao/JdbcUserDaoTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tenmo-server/src/test/java/com/techelevator/dao/TestingDatabaseConfig.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -30,27 +99,28 @@
         <option name="useMavenConfig" value="true" />
       </MavenGeneralSettings>
     </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
   </component>
   <component name="ProjectId" id="2M9apaueroUqwcz1UrBPo1dsSPC" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/datae/Repos/module-2-capstone/tenmo-server/pom.xml",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "MavenSettings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/datae/Repos/module-2-capstone/tenmo-client/pom.xml&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.techelevator.tenmo.App" />

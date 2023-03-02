@@ -9,8 +9,5 @@
         <module name="m02-capstone-client" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="m02-capstone-client" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
