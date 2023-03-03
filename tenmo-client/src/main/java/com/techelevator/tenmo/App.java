@@ -152,9 +152,7 @@ public class App {
         List<Transfer> transfers = transferResponse.getBody();
 
         if(transfers != null && !transfers.isEmpty()) {
-            for (Transfer x : transfers) {
-                System.out.println(x.toString());
-            }
+            consoleService.printTransferHistory(transfers);
         }else {
             System.out.println("no transactions found");
         }

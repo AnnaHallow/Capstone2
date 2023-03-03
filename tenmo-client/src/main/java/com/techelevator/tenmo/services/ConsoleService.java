@@ -1,9 +1,11 @@
 package com.techelevator.tenmo.services;
 
 
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.UserCredentials;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -88,4 +90,38 @@ public class ConsoleService {
         System.out.println("An error occurred. Check the log for details.");
     }
 
+    public void printTransferHistory(List<Transfer> transfers){
+        for (Transfer x : transfers) {
+            System.out.println(
+                    "\nTransfer " + x.getTransferId() +
+                            ": ");
+
+            int type = x.getTransferTypeId();
+            String transferType;
+            switch (type){
+                case 1: transferType = "Sent";
+                    break;
+                case 2: transferType = "Received";
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + type);
+            }
+
+            System.out.print(transferType + " ");
+
+            int status = x.getTransferStatusId();
+            String transferStatus;
+            switch(status){
+                case 1: transferStatus = "Pending";
+                    break;
+                case 2: transferStatus = "Approved";
+                    break;
+                case 3: transferStatus = "Rejected";
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + status);
+            }
+
+        }
+    }
 }
