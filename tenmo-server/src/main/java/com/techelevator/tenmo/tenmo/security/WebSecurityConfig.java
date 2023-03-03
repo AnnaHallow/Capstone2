@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @param web
      */
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/register");
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/login","/register");
     }
 
     /**

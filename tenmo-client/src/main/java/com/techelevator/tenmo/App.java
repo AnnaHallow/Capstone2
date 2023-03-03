@@ -8,8 +8,7 @@ import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
 import com.techelevator.util.BasicLogger;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
@@ -73,7 +72,8 @@ public class App {
             consoleService.printErrorMessage();
         } else {
             try {
-                currentAccount = restTemplate.getForObject(API_BASE_URL + "account/getaccount/" + currentUser.getUser().getId(), Account.class);
+                HttpEntity<String> entity = getHeaders();
+                currentAccount = restTemplate.exchange(API_BASE_URL + "account/getaccount/" + currentUser.getUser().getId(), HttpMethod.GET, entity, Account.class).getBody();
             } catch (RestClientResponseException e) {
                 BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
             } catch (ResourceAccessException e) {
@@ -145,9 +145,10 @@ public class App {
         //Not sure if that is the right call 'accountId/ account_id", also not sure how to call the transfers themselves.
         //Send accountId/ account_id
         //Will require checking accountTo and accountFrom
+        HttpEntity entity = getHeaders();
         ResponseEntity<List<Transfer>> transferResponse =
                 restTemplate.exchange(API_BASE_URL + "transfer/history/" + currentAccount.getAccountId(),
-                        HttpMethod.GET, null, new ParameterizedTypeReference<List<Transfer>>() {
+                        HttpMethod.GET, entity, new ParameterizedTypeReference<List<Transfer>>() {
                         });
         List<Transfer> transfers = transferResponse.getBody();
 
@@ -197,5 +198,12 @@ public class App {
          */
 		
 	}
+
+    private HttpEntity<String> getHeaders(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + currentUser.getToken());
+        return new HttpEntity<String>(headers);
+    }
 
 }

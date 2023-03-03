@@ -70,7 +70,7 @@ public class Transfer {
         this.amount = amount;
     }
 
-    @java.lang.Override
+    @Override
     public java.lang.String toString() {
         return "Transfer " + transferId + ":" +
                 ", transferTypeId=" + transferTypeId +

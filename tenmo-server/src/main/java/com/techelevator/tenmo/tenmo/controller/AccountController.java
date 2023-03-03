@@ -2,9 +2,11 @@ package com.techelevator.tenmo.tenmo.controller;
 
 import com.techelevator.tenmo.tenmo.model.Account;
 import com.techelevator.tenmo.tenmo.services.AccountService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@PreAuthorize("isAuthenticated()")
 @RequestMapping(value = "/account")
 public class AccountController {
 

@@ -3,11 +3,13 @@ package com.techelevator.tenmo.tenmo.controller;
 import com.techelevator.tenmo.tenmo.model.Transfer;
 import com.techelevator.tenmo.tenmo.pojos.TransferRequest;
 import com.techelevator.tenmo.tenmo.services.TransferService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@PreAuthorize("isAuthenticated()")
 @RequestMapping(value = "/transfer")
 public class TransferController {
 
