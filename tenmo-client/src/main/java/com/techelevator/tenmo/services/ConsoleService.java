@@ -92,36 +92,49 @@ public class ConsoleService {
 
     public void printTransferHistory(List<Transfer> transfers){
         for (Transfer x : transfers) {
-            System.out.println(
-                    "\nTransfer " + x.getTransferId() +
-                            ": ");
+            if(x.getTransferStatusId() != 1) {
+                System.out.println(
+                        "\nTransfer " + x.getTransferId() +
+                                ": ");
 
-            int type = x.getTransferTypeId();
-            String transferType;
-            switch (type){
-                case 1: transferType = "Sent";
-                    break;
-                case 2: transferType = "Received";
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + type);
+                int type = x.getTransferTypeId();
+                String transferType;
+                switch (type) {
+                    case 1:
+                        transferType = "Sent";
+                        break;
+                    case 2:
+                        transferType = "Received";
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + type);
+                }
+
+                System.out.print(transferType + " ");
+
+                int status = x.getTransferStatusId();
+                String transferStatus;
+                switch (status) {
+                    case 1:
+                        transferStatus = "Pending";
+                        break;
+                    case 2:
+                        transferStatus = "Approved";
+                        break;
+                    case 3:
+                        transferStatus = "Rejected";
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + status);
+                }
+
+                System.out.println(": " + transferStatus);
+
+                System.out.println("Account From: " + x.getAccountFrom() +
+                        "  Account To: " + x.getAccountTo());
+
+                System.out.println("Amount: " + x.getAmount());
             }
-
-            System.out.print(transferType + " ");
-
-            int status = x.getTransferStatusId();
-            String transferStatus;
-            switch(status){
-                case 1: transferStatus = "Pending";
-                    break;
-                case 2: transferStatus = "Approved";
-                    break;
-                case 3: transferStatus = "Rejected";
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + status);
-            }
-
         }
     }
 }
