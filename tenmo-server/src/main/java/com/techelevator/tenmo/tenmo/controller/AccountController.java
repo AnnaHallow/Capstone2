@@ -5,6 +5,8 @@ import com.techelevator.tenmo.tenmo.services.AccountService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @PreAuthorize("isAuthenticated()")
 @RequestMapping(value = "/account")
@@ -16,10 +18,10 @@ public class AccountController {
 		this.accountService = accountService;
 	}
 
-
-
-
-
+	@GetMapping("/getaccounts")
+	public List<Account> getAccounts(){
+		return accountService.getAccounts();
+	}
 
 	@GetMapping("/getaccount/{userId}")
 	public Account getAccount(@PathVariable int userId){

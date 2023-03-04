@@ -4,6 +4,8 @@ import com.techelevator.tenmo.tenmo.model.Account;
 import com.techelevator.tenmo.tenmo.repositories.AccountRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountService {
 
@@ -19,5 +21,9 @@ public class AccountService {
 
 	public Account saveAccount (Account account){
 		return accountRepository.save(account);
+	}
+
+	public List<Account> getAccounts() {
+		return accountRepository.findAll();
 	}
 }
