@@ -73,7 +73,8 @@ public class App {
         } else {
             try {
                 HttpEntity<String> entity = getHeaders();
-                currentAccount = restTemplate.exchange(API_BASE_URL + "account/getaccount/" + currentUser.getUser().getId(), HttpMethod.GET, entity, Account.class).getBody();
+                currentAccount = restTemplate.exchange(API_BASE_URL + "account/getaccount/" +
+                        currentUser.getUser().getId(), HttpMethod.GET, entity, Account.class).getBody();
             } catch (RestClientResponseException e) {
                 BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
             } catch (ResourceAccessException e) {
@@ -118,7 +119,8 @@ public class App {
 
 //        Account currentBal = null;
 //        try {
-//            currentBal = restTemplate.getForObject(API_BASE_URL + "account/getaccount/" + currentUser.getUser().getId(), Account.class);
+//            currentBal = restTemplate.getForObject(API_BASE_URL + "account/getaccount/" +
+//            currentUser.getUser().getId(), Account.class);
 //
 //        } catch (RestClientResponseException e) {
 //            BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
@@ -136,74 +138,7 @@ public class App {
         }
     }
 
-    //Sophie
-	private void viewTransferHistory() {
-		// TODO Auto-generated method stub
-		//Need a List<Transfer> from API
-//        List<Transfer> transfers = restTemplate.exchange(
-//                API_BASE_URL + "/history/" + currentAccount.getAccountId(), List<>.class);
-        //Not sure if that is the right call 'accountId/ account_id", also not sure how to call the transfers themselves.
-        //Send accountId/ account_id
-        //Will require checking accountTo and accountFrom
-        HttpEntity entity = getHeaders();
-        ResponseEntity<List<Transfer>> transferResponse =
-                restTemplate.exchange(API_BASE_URL + "transfer/history/" + currentAccount.getAccountId(),
-                        HttpMethod.GET, entity, new ParameterizedTypeReference<List<Transfer>>() {
-                        });
-        List<Transfer> transfers = transferResponse.getBody();
-
-        if(transfers != null && !transfers.isEmpty()) {
-            consoleService.printTransferHistory(transfers);
-        }else {
-            System.out.println("no transactions found");
-        }
-	}
-
-    //Anne
-	private void viewPendingRequests() {
-		// TODO Auto-generated method stub
-		/*
-		* Need List<Transfer> where transferStatusId = 1
-		* Send accountId / account_id
-		* */
-
-	}
 
 
-
-
-    
-    //Sophie
-	private void sendBucks() {
-		// TODO Auto-generated method stub
-        /* reducing current account
-            increasing receiving
-            Need: Void
-            Send Current accountId
-                Receiving   accountId
-                amount being sent
-         */
-
-		
-	}
-
-    //Anne
-	private void requestBucks() {
-		// TODO Auto-generate d method stub
-        /*
-        Need: Void
-        Send Current accountId
-                requested   accountId
-                amount being being requested
-         */
-		
-	}
-
-    private HttpEntity<String> getHeaders(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + currentUser.getToken());
-        return new HttpEntity<String>(headers);
-    }
 
 }
