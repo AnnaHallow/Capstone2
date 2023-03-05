@@ -1,12 +1,7 @@
 package com.techelevator.tenmo;
 
-import com.techelevator.tenmo.model.Account;
-import com.techelevator.tenmo.model.AuthenticatedUser;
-import com.techelevator.tenmo.model.Transfer;
-import com.techelevator.tenmo.model.UserCredentials;
-import com.techelevator.tenmo.services.AuthenticationService;
-import com.techelevator.tenmo.services.ConsoleService;
-import com.techelevator.tenmo.services.TransferService;
+import com.techelevator.tenmo.model.*;
+import com.techelevator.tenmo.services.*;
 import com.techelevator.util.BasicLogger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -14,6 +9,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,6 +24,8 @@ public class App {
     private AuthenticatedUser currentUser;
     private Account currentAccount;
     private TransferService transferService;
+    private AccountServices accountServices;
+    private UserService userService;
 
 
     public static void main(String[] args) {
@@ -74,6 +72,7 @@ public class App {
         if (currentUser == null) {
             consoleService.printErrorMessage();
         } else {
+<<<<<<< HEAD
             try {
                 HttpEntity<Object> entity = authenticationService.getHeaders(currentUser);
                 currentAccount = restTemplate.exchange(API_BASE_URL + "account/getaccount/" +
@@ -84,6 +83,9 @@ public class App {
                 BasicLogger.log(e.getMessage());
             }
 
+=======
+           Account currentAccount = accountServices.getAccount(currentUser);
+>>>>>>> 3c8f803d41ddb0b1fa2b54d3e1798a06266a873d
         }
     }
 
@@ -154,15 +156,13 @@ public class App {
     private void sendBucks() {
         // TODO Auto-generated method stub
         /* reducing current account
-            increasing receiving
-            Need: Void
             Send Current accountId
                 Receiving   accountId
                 amount being sent
                 build the Transfer obj - everything but ID
                 Display -> List of users to choose from
                 Have them select by UserID with Username (to grab that user, user there accountID)
-                use the promptForInt method consoleService (add in the string of what you ask for to use this metod,
+                use the promptForInt method consoleService (add in the string of what you ask for to use this method,
                 it will return an int)
                 With the accountID create account obj and call API to get users account
                 After grabbing account from API, set 'accountTo' to the accountId pulled
@@ -175,19 +175,25 @@ public class App {
                 Don't forget - before ending method, reduce and increase both accounts.
          */
 
-        HttpEntity entity = authenticationService.getHeaders(currentUser);
-        ResponseEntity<List<Transfer>> sendResponse = restTemplate.exchange(API_BASE_URL + "/account/getaccount/{userId}" +
-                currentAccount.getAccountId(), HttpMethod.POST, entity, new ParameterizedTypeReference<List<Transfer>>() {});
+        List<Account> accounts = accountServices.listOfAccounts(currentUser);
+        List<User> users = userService.listOfUsers(currentUser);
+        int receivingUserId = consoleService.selectUser(users);
+        int amountToSend = consoleService.amountToSend(receivingUserId);
+        Account receivingAccount = accountServices.getAccount(currentUser, receivingUserId);
 
-        System.out.println();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Who would you like to make a transfer to?");
+        BigDecimal currentUserAccount = currentAccount.getBalance();
+        BigDecimal receivingUserAccount = receivingAccount.getBalance();
 
+        currentAccount.setBalance(currentUserAccount.subtract(BigDecimal.valueOf(amountToSend)));
+        receivingAccount.setBalance(receivingUserAccount.add(BigDecimal.valueOf(amountToSend)));
 
+        accountServices.updateAccount(currentAccount, currentUser);
+        accountServices.updateAccount(receivingAccount, currentUser);
 
+        Transfer transfer = new Transfer(2, 2, currentAccount.getAccountId(),
+                receivingAccount.getAccountId(), BigDecimal.valueOf(amountToSend));
 
-
-
+        transfer.setTransferId(transferService.updateTransfer(transfer, currentUser));
     }
 
     //Anne

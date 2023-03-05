@@ -3,8 +3,11 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
+import com.techelevator.util.BasicLogger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -39,5 +42,30 @@ public class TransferService {
 
 
         return transfers;
+    }
+
+    public int saveTransfer(Transfer transfer, AuthenticatedUser currentUser){
+        HttpEntity<Transfer> entity = updateTransfer(currentUser);
+               Transfer transferId = restTemplate.exchange(API_BASE_URL + "transfer/addtransfer/",
+                        HttpMethod.POST, entity, new ParameterizedTypeReference<Transfer>() {}).getBody();
+               return transferId.getTransferId();
+    }
+
+    public int updateTransfer(Transfer transferToUpdate, AuthenticatedUser authenticatedUser) {
+        int id = 0;
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + authenticatedUser.getToken());
+            HttpEntity<Transfer> entity = new HttpEntity<>(transferToUpdate, headers);
+            Transfer a = restTemplate.exchange(API_BASE_URL + "transfer/savetransfer/",
+                    HttpMethod.POST, entity, Transfer.class).getBody();
+            id = a.getTransferId();
+        } catch (RestClientResponseException e) {
+            BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
+        } catch (ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
+            return id;
     }
 }
