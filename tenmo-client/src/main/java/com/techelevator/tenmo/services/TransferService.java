@@ -40,4 +40,10 @@ public class TransferService {
 
         return transfers;
     }
+
+    public int saveTransfer(Transfer transfer, AuthenticatedUser currentUser){
+        HttpEntity<String> entity = authenticationService.getHeaders(currentUser);
+               int transferId = restTemplate.exchange(API_BASE_URL + "transfer/addtransfer/", transfer,
+                        HttpMethod.POST, entity, new ParameterizedTypeReference<List<Transfer>>() {});
+    }
 }
