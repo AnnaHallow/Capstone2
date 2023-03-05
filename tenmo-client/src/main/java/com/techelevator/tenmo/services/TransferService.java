@@ -44,14 +44,7 @@ public class TransferService {
         return transfers;
     }
 
-    public int saveTransfer(Transfer transfer, AuthenticatedUser currentUser){
-        HttpEntity<Transfer> entity = updateTransfer(currentUser);
-               Transfer transferId = restTemplate.exchange(API_BASE_URL + "transfer/addtransfer/",
-                        HttpMethod.POST, entity, new ParameterizedTypeReference<Transfer>() {}).getBody();
-               return transferId.getTransferId();
-    }
-
-    public int updateTransfer(Transfer transferToUpdate, AuthenticatedUser authenticatedUser) {
+    public int saveTransfer(Transfer transferToUpdate, AuthenticatedUser authenticatedUser) {
         int id = 0;
         try {
             HttpHeaders headers = new HttpHeaders();

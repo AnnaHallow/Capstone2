@@ -27,14 +27,7 @@ public class User {
    @JsonIgnore // prevent from being sent to client
    private String password;
 
-//   @JsonIgnore
-//   @OneToOne
-//   @JoinColumn(name = "user_id")
-//   private Account account;
-
-
-
-   @JsonIgnore
+   @Transient
    private boolean activated;
 
    @Transient

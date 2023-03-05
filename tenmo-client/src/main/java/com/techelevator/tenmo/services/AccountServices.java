@@ -32,7 +32,7 @@ public class AccountServices {
         Account currentAccount = null;
 
         try {
-            HttpEntity<String> entity = authenticationService.getHeaders(currentUser);
+            HttpEntity<Object> entity = authenticationService.getHeaders(currentUser);
             currentAccount = restTemplate.exchange(API_BASE_URL + "account/getaccount/" +
                     currentUser.getUser().getId(), HttpMethod.GET, entity, Account.class).getBody();
         } catch (RestClientResponseException e) {
@@ -47,7 +47,7 @@ public class AccountServices {
         Account recievingAccount = null;
 
         try {
-            HttpEntity<String> entity = authenticationService.getHeaders(currentUser);
+            HttpEntity<Object> entity = authenticationService.getHeaders(currentUser);
             recievingAccount = restTemplate.exchange(API_BASE_URL + "account/getaccount/" +
                     receivingUser, HttpMethod.GET, entity, Account.class).getBody();
         } catch (RestClientResponseException e) {

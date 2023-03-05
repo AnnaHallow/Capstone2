@@ -23,9 +23,9 @@ public class App {
 
     private AuthenticatedUser currentUser;
     private Account currentAccount;
-    private TransferService transferService;
-    private AccountServices accountServices;
-    private UserService userService;
+    private TransferService transferService = new TransferService();
+    private AccountServices accountServices = new AccountServices();
+    private UserService userService = new UserService();
 
 
     public static void main(String[] args) {
@@ -72,7 +72,6 @@ public class App {
         if (currentUser == null) {
             consoleService.printErrorMessage();
         } else {
-<<<<<<< HEAD
             try {
                 HttpEntity<Object> entity = authenticationService.getHeaders(currentUser);
                 currentAccount = restTemplate.exchange(API_BASE_URL + "account/getaccount/" +
@@ -83,9 +82,9 @@ public class App {
                 BasicLogger.log(e.getMessage());
             }
 
-=======
-           Account currentAccount = accountServices.getAccount(currentUser);
->>>>>>> 3c8f803d41ddb0b1fa2b54d3e1798a06266a873d
+
+//           Account currentAccount = accountServices.getAccount(currentUser);
+
         }
     }
 
@@ -193,7 +192,7 @@ public class App {
         Transfer transfer = new Transfer(2, 2, currentAccount.getAccountId(),
                 receivingAccount.getAccountId(), BigDecimal.valueOf(amountToSend));
 
-        transfer.setTransferId(transferService.updateTransfer(transfer, currentUser));
+        transfer.setTransferId(transferService.saveTransfer(transfer, currentUser));
     }
 
     //Anne

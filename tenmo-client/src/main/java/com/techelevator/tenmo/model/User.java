@@ -5,7 +5,35 @@ import java.util.Objects;
 public class User {
 
     private int id;
+
     private String username;
+    private String password;
+    private boolean activated;
+
+    public User(int id, String username, String password, boolean activated) {
+        this.username = username;
+        this.password = password;
+        this.activated = activated;
+    }
+
+    public User() {
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
 
     public int getId() {
         return id;
