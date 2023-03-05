@@ -1,10 +1,7 @@
 package com.techelevator.tenmo.services;
 
 
-import com.techelevator.tenmo.model.Account;
-import com.techelevator.tenmo.model.Transfer;
-import com.techelevator.tenmo.model.User;
-import com.techelevator.tenmo.model.UserCredentials;
+import com.techelevator.tenmo.model.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -140,10 +137,11 @@ public class ConsoleService {
         }
     }
 
-    public int selectUser(List<User> userList) {
+    public int selectUser(List<User> userList, User currentUser) {
         for (User user : userList) {
-
-            System.out.println("\n" + user.getId() + ": " + user.getUsername());
+            if(user.getId() != currentUser.getId()){
+                System.out.println("\n" + user.getId() + ": " + user.getUsername());
+            }
         }
         return promptForInt("Please select the number of the User you would like to transfer to.");
     }

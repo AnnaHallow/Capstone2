@@ -3,7 +3,6 @@ package com.techelevator.tenmo;
 import com.techelevator.tenmo.model.*;
 import com.techelevator.tenmo.services.*;
 import com.techelevator.util.BasicLogger;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
@@ -11,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Scanner;
 
 public class App {
 
@@ -21,8 +19,8 @@ public class App {
     private RestTemplate restTemplate = new RestTemplate();
     private final AuthenticationService authenticationService = new AuthenticationService(API_BASE_URL);
 
-    private AuthenticatedUser currentUser;
-    private AuthenticatedUser selectedUser;
+    private AuthenticatedUser currentAuthenticatedUser;
+    private User currentUser = userService.
     private Account currentAccount;
     private TransferService transferService = new TransferService();
     private AccountServices accountServices = new AccountServices();
@@ -40,13 +38,13 @@ public class App {
     private void run() {
         consoleService.printGreeting();
         loginMenu();
-        if (currentUser != null) {
+        if (currentAuthenticatedUser != null) {
             mainMenu();
         }
     }
     private void loginMenu() {
         int menuSelection = -1;
-        while (menuSelection != 0 && currentUser == null) {
+        while (menuSelection != 0 && currentAuthenticatedUser == null) {
             consoleService.printLoginMenu();
             menuSelection = consoleService.promptForMenuSelection("Please choose an option: ");
             if (menuSelection == 1) {
@@ -72,14 +70,14 @@ public class App {
 
     private void handleLogin() {
         UserCredentials credentials = consoleService.promptForCredentials();
-        currentUser = authenticationService.login(credentials);
-        if (currentUser == null) {
+        currentAuthenticatedUser = authenticationService.login(credentials);
+        if (currentAuthenticatedUser == null) {
             consoleService.printErrorMessage();
         } else {
             try {
-                HttpEntity<Object> entity = authenticationService.getHeaders(currentUser);
+                HttpEntity<Object> entity = authenticationService.getHeaders(currentAuthenticatedUser);
                 currentAccount = restTemplate.exchange(API_BASE_URL + "account/getaccount/" +
-                        currentUser.getUser().getId(), HttpMethod.GET, entity, Account.class).getBody();
+                        currentAuthenticatedUser.getUser().getId(), HttpMethod.GET, entity, Account.class).getBody();
             } catch (RestClientResponseException e) {
                 BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
             } catch (ResourceAccessException e) {
@@ -136,7 +134,7 @@ public class App {
         //Will require checking accountTo and accountFrom
         //add JWD token
         //throw in transfer service class
-        List<Transfer> transfers = transferService.viewTransferHistory(currentUser, currentAccount);
+        List<Transfer> transfers = transferService.viewTransferHistory(currentAuthenticatedUser, currentAccount);
 
         if(transfers != null && !transfers.isEmpty()) {
             consoleService.printTransferHistory(transfers);
@@ -154,8 +152,8 @@ public class App {
          * Send accountId / account_id
          *
          * */
-        List<Transfer> pending;
-        List<Transfer> all = transferService.viewTransferHistory(currentUser, currentAccount);
+        List<Transfer> pending = null;
+        List<Transfer> all = transferService.viewTransferHistory(currentAuthenticatedUser, currentAccount);
         for (Transfer transfer : all) {
             if (transfer.getTransferStatusId() == 1) {
                 pending.add(transfer);
@@ -188,11 +186,11 @@ public class App {
                 Don't forget - before ending method, reduce and increase both accounts.
          */
 
-        List<Account> accounts = accountServices.listOfAccounts(currentUser);
-        List<User> users = userService.listOfUsers(currentUser);
-        int receivingUserId = consoleService.selectUser(users);
+        List<Account> accounts = accountServices.listOfAccounts(currentAuthenticatedUser);
+        List<User> users = userService.listOfUsers(currentAuthenticatedUser);
+        int receivingUserId = consoleService.selectUser(users, currentAuthenticatedUser.getUser());
         int amountToSend = consoleService.amountToSend(receivingUserId);
-        Account receivingAccount = accountServices.getAccount(currentUser, receivingUserId);
+        Account receivingAccount = accountServices.getAccount(currentAuthenticatedUser, receivingUserId);
 
         BigDecimal currentUserAccount = currentAccount.getBalance();
         BigDecimal receivingUserAccount = receivingAccount.getBalance();
@@ -200,13 +198,13 @@ public class App {
         currentAccount.setBalance(currentUserAccount.subtract(BigDecimal.valueOf(amountToSend)));
         receivingAccount.setBalance(receivingUserAccount.add(BigDecimal.valueOf(amountToSend)));
 
-        accountServices.updateAccount(currentAccount, currentUser);
-        accountServices.updateAccount(receivingAccount, currentUser);
+        accountServices.updateAccount(currentAccount, currentAuthenticatedUser);
+        accountServices.updateAccount(receivingAccount, currentAuthenticatedUser);
 
         Transfer transfer = new Transfer(2, 2, currentAccount.getAccountId(),
                 receivingAccount.getAccountId(), BigDecimal.valueOf(amountToSend));
 
-      transferService.saveTransfer(transfer, currentUser);
+      transferService.saveTransfer(transfer, currentAuthenticatedUser);
 
       accountServices.transactionComplete(currentAccount);
 
@@ -222,17 +220,17 @@ public class App {
                 amount being being requested
          */
         // pull current account
-        List<Account> accounts = accountServices.listOfAccounts(currentUser);
-        List<User> users = userService.listOfUsers(currentUser);
+        List<Account> accounts = accountServices.listOfAccounts(currentAuthenticatedUser);
+        List<User> users = userService.listOfUsers(currentAuthenticatedUser);
 
         //list all accounts to choose from?? Or add account being sent to
         consoleService.promptForInt("Choose an account to request from ");
 
 
         //pull account being sent to
-        int requestingUserId = consoleService.selectUser(users);
+        int requestingUserId = consoleService.selectUser(users, currentUser);
         int amountToRequest = consoleService.amountToRequest(requestingUserId);
-        Account requestingAccount = accountServices.getAccount(currentUser, requestingUserId);
+        Account requestingAccount = accountServices.getAccount(currentAuthenticatedUser, requestingUserId);
 
         BigDecimal currentUserAccount = currentAccount.getBalance();
         //do we need to check the requesting account? Could possibly auto decline for insufficient funds?
@@ -250,7 +248,7 @@ public class App {
         Transfer transfer = new Transfer(1, 1, currentAccount.getAccountId(),
                 requestingAccount.getAccountId(), BigDecimal.valueOf(amountToRequest));
 
-        transferService.saveTransfer(transfer, currentUser);
+        transferService.saveTransfer(transfer, currentAuthenticatedUser);
 
     }
 
