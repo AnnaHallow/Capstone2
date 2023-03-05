@@ -232,17 +232,25 @@ public class App {
         //pull account being sent to
         int requestingUserId = consoleService.selectUser(users);
         int amountToRequest = consoleService.amountToRequest(requestingUserId);
-        Account requestingAccount = accountServices.getAccount(currentUser, requestnigUserId);
+        Account requestingAccount = accountServices.getAccount(currentUser, requestingUserId);
 
         BigDecimal currentUserAccount = currentAccount.getBalance();
         //do we need to check the requesting account? Could possibly auto decline for insufficient funds?
         BigDecimal requestingUserAccount = requestingAccount.getBalance();
 
-        //set status to pending (=1)  What is the transfer type?
-        Transfer transfer = new Transfer(1, 1, currentAccount.getAccountId(),
-                requestingUserAccount.getAccountId(), BigDecimal.valueOf(amountToRequest));
 
-        transfer.setTransferId(transferService.saveTransfer(transfer, currentUser));
+        //set status to pending (=1)  What is the transfer type?
+        //**Transfer Typre Request is 1 also
+        //** Your accounts are backward here the first account should be who the money is coming from
+        // and the second account should be who the money is going to
+        //** you could wrap this is an if statement...if requesting amount is > 0
+        // AND requestingAmount is lessthan requestingAccount.getBalance
+        //and throw an else saying the target users account balance dows not support this transaction or something to that effect.
+
+        Transfer transfer = new Transfer(1, 1, currentAccount.getAccountId(),
+                requestingAccount.getAccountId(), BigDecimal.valueOf(amountToRequest));
+
+        transferService.saveTransfer(transfer, currentUser);
 
     }
 

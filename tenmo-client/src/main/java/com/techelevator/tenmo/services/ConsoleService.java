@@ -92,9 +92,9 @@ public class ConsoleService {
         System.out.println("An error occurred. Check the log for details.");
     }
 
-    public void printTransferHistory(List<Transfer> transfers){
+    public void printTransferHistory(List<Transfer> transfers) {
         for (Transfer x : transfers) {
-            if(x.getTransferStatusId() != 1) {
+            if (x.getTransferStatusId() != 1) {
                 System.out.println(
                         "\nTransfer " + x.getTransferId() +
                                 ": ");
@@ -140,17 +140,27 @@ public class ConsoleService {
         }
     }
 
-    public int selectUser(List<User> userList){
+    public int selectUser(List<User> userList) {
         for (User user : userList) {
 
             System.out.println("\n" + user.getId() + ": " + user.getUsername());
         }
         return promptForInt("Please select the number of the User you would like to transfer to.");
     }
-    public int amountToSend(int receivingUserId){
-        while(true) {
+
+    public int amountToSend(int receivingUserId) {
+        while (true) {
             int holding = promptForInt("Specify an amount to send to User " + receivingUserId + ": ");
-            if(holding > 0){
+            if (holding > 0) {
+                return holding;
+            }
+        }
+    }
+
+    public int amountToRequest(int requestinggUserId) {
+        while (true) {
+            int holding = promptForInt("Specify an amount to request from User " + requestinggUserId + ": ");
+            if (holding > 0) {
                 return holding;
             }
         }
