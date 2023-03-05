@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ee78ad1-1668-456c-a103-34b98a79963a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/services/AccountServices.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/services/AccountServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/services/AccountServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/services/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/services/AuthenticationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/services/ConsoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/services/ConsoleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/services/TransferService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tenmo-client/src/main/java/com/techelevator/tenmo/services/TransferService.java" afterDir="false" />
     </list>

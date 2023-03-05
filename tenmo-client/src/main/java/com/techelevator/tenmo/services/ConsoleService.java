@@ -148,6 +148,11 @@ public class ConsoleService {
         return promptForInt("Please select the number of the User you would like to transfer to.");
     }
     public int amountToSend(int receivingUserId){
-        return promptForInt("Specify an amount to send to User " + receivingUserId + ": ");
+        while(true) {
+            int holding = promptForInt("Specify an amount to send to User " + receivingUserId + ": ");
+            if(holding > 0){
+                return holding;
+            }
+        }
     }
 }

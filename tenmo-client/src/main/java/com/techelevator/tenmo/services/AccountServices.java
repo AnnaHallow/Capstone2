@@ -2,12 +2,11 @@ package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
 import com.techelevator.util.BasicLogger;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
@@ -61,13 +60,17 @@ public class AccountServices {
 
     public void updateAccount(Account accountToUpdate, AuthenticatedUser authenticatedUser){
         try {
-            HttpEntity<String> entity = authenticationService.getHeaders(authenticatedUser);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + authenticatedUser.getToken());
+            HttpEntity<Account> entity = new HttpEntity<>(accountToUpdate, headers);
             restTemplate.exchange(API_BASE_URL + "account/updateaccount/",
-                    accountToUpdate, HttpMethod.POST, entity, Account.class);
+                    HttpMethod.POST, entity, Account.class);
         } catch (RestClientResponseException e) {
             BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
         } catch (ResourceAccessException e) {
             BasicLogger.log(e.getMessage());
         }
     }
+
 }

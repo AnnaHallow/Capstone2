@@ -196,9 +196,10 @@ public class App {
         accountServices.updateAccount(currentAccount, currentUser);
         accountServices.updateAccount(receivingAccount, currentUser);
 
-        Transfer transfer = new Transfer(2, 2,
-                currentAccount.getAccountId(), receivingAccount.getAccountId(), BigDecimal.valueOf(amountToSend));
+        Transfer transfer = new Transfer(2, 2, currentAccount.getAccountId(),
+                receivingAccount.getAccountId(), BigDecimal.valueOf(amountToSend));
 
+        transfer.setTransferId(transferService.updateTransfer(transfer, currentUser));
     }
 
     //Anne
