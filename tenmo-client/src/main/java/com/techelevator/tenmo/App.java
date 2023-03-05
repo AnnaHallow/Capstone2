@@ -75,7 +75,7 @@ public class App {
             consoleService.printErrorMessage();
         } else {
             try {
-                HttpEntity<String> entity = authenticationService.getHeaders(currentUser);
+                HttpEntity<Object> entity = authenticationService.getHeaders(currentUser);
                 currentAccount = restTemplate.exchange(API_BASE_URL + "account/getaccount/" +
                         currentUser.getUser().getId(), HttpMethod.GET, entity, Account.class).getBody();
             } catch (RestClientResponseException e) {
@@ -111,30 +111,11 @@ public class App {
         }
     }
 
-    //Anne
-	private void viewCurrentBalance() {
-        // TODO Auto-generated method stub
-        // What we are pulling from the API and what we are providing
-        // to get it
-        //Need: Current Balance from the Account Table
-        //Send accountId / account_id
 
-//        Account currentBal = null;
-//        try {
-//            currentBal = restTemplate.getForObject(API_BASE_URL + "account/getaccount/" +
-//            currentUser.getUser().getId(), Account.class);
-//
-//        } catch (RestClientResponseException e) {
-//            BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
-//        } catch (ResourceAccessException e) {
-//            BasicLogger.log(e.getMessage());
-//        }
-//        if (currentBal != null) {
-//            System.out.println("Current Balance: " + currentBal.getBalance());
-//        }
-//        if (currentBal == null) {
-//            System.out.println("Null");
-//        }
+    //Anne
+    //**this needs an else statement
+	private void viewCurrentBalance() {
+
         if (currentAccount.getBalance() != null) {
             System.out.println("Current Balance: " + currentAccount.getBalance());
         }

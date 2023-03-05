@@ -30,7 +30,7 @@ public class TransferService {
         //add JWD token
         //throw in transfer service class
 
-        HttpEntity<String> entity = authenticationService.getHeaders(currentUser);
+        HttpEntity<Object> entity = authenticationService.getHeaders(currentUser);
         ResponseEntity<List<Transfer>> transferResponse =
                 restTemplate.exchange(API_BASE_URL + "transfer/history/" + currentAccount.getAccountId(),
                         HttpMethod.GET, entity, new ParameterizedTypeReference<List<Transfer>>() {

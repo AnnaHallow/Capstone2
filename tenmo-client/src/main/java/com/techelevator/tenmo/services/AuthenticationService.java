@@ -54,10 +54,10 @@ public class AuthenticationService {
         return new HttpEntity<>(credentials, headers);
     }
 
-    public HttpEntity<String> getHeaders(AuthenticatedUser currentUser){
+    public HttpEntity<Object> getHeaders(AuthenticatedUser currentUser){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + currentUser.getToken());
-        return new HttpEntity<String>(headers);
+        return new HttpEntity<Object>(headers);
     }
 }
