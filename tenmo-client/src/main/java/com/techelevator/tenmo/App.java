@@ -228,7 +228,7 @@ public class App {
 
 
         //pull account being sent to
-        int requestingUserId = consoleService.selectUser(users, currentUser);
+        int requestingUserId = consoleService.selectUser(users, currentAuthenticatedUser.getUser());
         int amountToRequest = consoleService.amountToRequest(requestingUserId);
         Account requestingAccount = accountServices.getAccount(currentAuthenticatedUser, requestingUserId);
 
