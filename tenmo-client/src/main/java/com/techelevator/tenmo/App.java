@@ -184,57 +184,54 @@ public class App {
                 send and get response - "How much do you want to send?"
                 Don't forget - before ending method, reduce and increase both accounts.
          */
-
-        List<Account> accounts = accountServices.listOfAccounts(currentAuthenticatedUser);
+        int receivingUserId = 0;
         List<User> users = userService.listOfUsers(currentAuthenticatedUser);
-        int receivingUserId = consoleService.selectUser(users, currentAuthenticatedUser.getUser());
-        int amountToSend = consoleService.amountToSend(receivingUserId);
-        Account receivingAccount = accountServices.getAccount(currentAuthenticatedUser, receivingUserId);
+        while(receivingUserId == 0){
+            receivingUserId = consoleService.selectUser(users, currentAuthenticatedUser.getUser());
+        }
+        double amountToSend = consoleService.amountToSend(receivingUserId, currentAccount);
+        if (amountToSend > 0) {
+            Account receivingAccount = accountServices.getAccount(currentAuthenticatedUser, receivingUserId);
 
-        BigDecimal currentUserAccount = currentAccount.getBalance();
-        BigDecimal receivingUserAccount = receivingAccount.getBalance();
+            BigDecimal currentUserBalance = currentAccount.getBalance();
+            BigDecimal receivingUserBalance = receivingAccount.getBalance();
 
-        currentAccount.setBalance(currentUserAccount.subtract(BigDecimal.valueOf(amountToSend)));
-        receivingAccount.setBalance(receivingUserAccount.add(BigDecimal.valueOf(amountToSend)));
+            currentAccount.setBalance(currentUserBalance.subtract(BigDecimal.valueOf(amountToSend)));
+            receivingAccount.setBalance(receivingUserBalance.add(BigDecimal.valueOf(amountToSend)));
 
-        accountServices.updateAccount(currentAccount, currentAuthenticatedUser);
-        accountServices.updateAccount(receivingAccount, currentAuthenticatedUser);
+            accountServices.updateAccount(currentAccount, currentAuthenticatedUser);
+            accountServices.updateAccount(receivingAccount, currentAuthenticatedUser);
 
-        Transfer transfer = new Transfer(2, 2, currentAccount.getAccountId(),
-                receivingAccount.getAccountId(), BigDecimal.valueOf(amountToSend));
+            Transfer transfer = new Transfer(2, 2, currentAccount.getAccountId(),
+                    receivingAccount.getAccountId(), BigDecimal.valueOf(amountToSend));
 
-      transferService.saveTransfer(transfer, currentAuthenticatedUser);
+            transferService.saveTransfer(transfer, currentAuthenticatedUser);
 
-      accountServices.transactionComplete(currentAccount);
-
+            accountServices.transactionComplete(currentAccount);
+        } else {
+            System.out.println("Unable to complete transaction. Please try again later.");
+        }
     }
 
     //Anne
     private void requestBucks() {
-        // TODO Auto-generated method stub
-        /*
-        Need: Void
-        Send Current accountId
-                requested   accountId
-                amount being being requested
-         */
+
         // pull current account
-        List<Account> accounts = accountServices.listOfAccounts(currentAuthenticatedUser);
+        int requestingUserId = 0;
         List<User> users = userService.listOfUsers(currentAuthenticatedUser);
 
-        //list all accounts to choose from?? Or add account being sent to
-        consoleService.promptForInt("Choose an account to request from ");
-
-
         //pull account being sent to
-        int requestingUserId = consoleService.selectUser(users, currentAuthenticatedUser.getUser());
-        int amountToRequest = consoleService.amountToRequest(requestingUserId);
+        while(requestingUserId == 0){
+            requestingUserId = consoleService.selectUser(users, currentAuthenticatedUser.getUser());
+        }
+
+
+        double amountToRequest = consoleService.amountToRequest(requestingUserId);
         Account requestingAccount = accountServices.getAccount(currentAuthenticatedUser, requestingUserId);
 
-        BigDecimal currentUserAccount = currentAccount.getBalance();
+        BigDecimal currentUserBalance = currentAccount.getBalance();
         //do we need to check the requesting account? Could possibly auto decline for insufficient funds?
-        BigDecimal requestingUserAccount = requestingAccount.getBalance();
-
+        BigDecimal requestingUserBalance = requestingAccount.getBalance();
 
         //set status to pending (=1)  What is the transfer type?
         //**Transfer Typre Request is 1 also
@@ -244,10 +241,12 @@ public class App {
         // AND requestingAmount is lessthan requestingAccount.getBalance
         //and throw an else saying the target users account balance dows not support this transaction or something to that effect.
 
-        Transfer transfer = new Transfer(1, 1, currentAccount.getAccountId(),
-                requestingAccount.getAccountId(), BigDecimal.valueOf(amountToRequest));
+        Transfer transfer = new Transfer(1, 1, requestingAccount.getAccountId(),
+                currentAccount.getAccountId(), BigDecimal.valueOf(amountToRequest));
 
         transferService.saveTransfer(transfer, currentAuthenticatedUser);
+
+        accountServices.transactionComplete(currentAccount);
 
     }
 

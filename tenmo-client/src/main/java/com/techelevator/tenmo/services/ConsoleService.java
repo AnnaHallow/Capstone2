@@ -69,6 +69,17 @@ public class ConsoleService {
         }
     }
 
+    public double promptForDouble(String prompt) {
+        System.out.print(prompt);
+        while (true) {
+            try {
+                return Double.parseDouble(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number.");
+            }
+        }
+    }
+
     public BigDecimal promptForBigDecimal(String prompt) {
         System.out.print(prompt);
         while (true) {
@@ -143,21 +154,34 @@ public class ConsoleService {
                 System.out.println("\n" + user.getId() + ": " + user.getUsername());
             }
         }
-        return promptForInt("Please select the number of the User you would like to transfer to.");
+        int x = promptForInt("Please select the number of the User you would like to transfer to.");
+        if(x != currentUser.getId()){
+            return x;
+        } else {
+            System.out.println("Please try not to send your own money to yourself.");
+        }
+        return 0;
     }
 
-    public int amountToSend(int receivingUserId) {
+    public double amountToSend(int receivingUserId, Account currentAccount) {
         while (true) {
-            int holding = promptForInt("Specify an amount to send to User " + receivingUserId + ": ");
+            double holding = promptForDouble("Specify an amount to send to User " + receivingUserId + ": ");
             if (holding > 0) {
-                return holding;
+                if (holding < currentAccount.getBalance().doubleValue()){
+                    return holding;
+                } else {
+                    System.out.println("\nAmount exceeds current balance.");
+                    System.out.println("Your current balance is: " + currentAccount.getBalance());
+                    return 0;
+                }
             }
         }
+
     }
 
-    public int amountToRequest(int requestinggUserId) {
+    public double amountToRequest(int requestingUserId) {
         while (true) {
-            int holding = promptForInt("Specify an amount to request from User " + requestinggUserId + ": ");
+            double holding = promptForDouble("Specify an amount to request from User " + requestingUserId + ": ");
             if (holding > 0) {
                 return holding;
             }
