@@ -22,10 +22,14 @@ public class App {
     private final AuthenticationService authenticationService = new AuthenticationService(API_BASE_URL);
 
     private AuthenticatedUser currentUser;
+    private AuthenticatedUser selectedUser;
     private Account currentAccount;
     private TransferService transferService = new TransferService();
     private AccountServices accountServices = new AccountServices();
     private UserService userService = new UserService();
+
+    public App() {
+    }
 
 
     public static void main(String[] args) {
@@ -119,6 +123,8 @@ public class App {
 
         if (currentAccount.getBalance() != null) {
             System.out.println("Current Balance: " + currentAccount.getBalance());
+        } else {
+            System.err.println("Balance not found ");
         }
     }
 
@@ -148,7 +154,15 @@ public class App {
          * Send accountId / account_id
          *
          * */
+        List<Transfer> pending;
+        List<Transfer> all = transferService.viewTransferHistory(currentUser, currentAccount);
+        for (Transfer transfer : all) {
+            if (transfer.getTransferStatusId() == 1) {
+                pending.add(transfer);
 
+            }
+        }
+        consoleService.printTransferHistory(pending);
     }
 
     //Sophie
@@ -197,13 +211,35 @@ public class App {
 
     //Anne
     private void requestBucks() {
-        // TODO Auto-generate d method stub
+        // TODO Auto-generated method stub
         /*
         Need: Void
         Send Current accountId
                 requested   accountId
                 amount being being requested
          */
+        // pull current account
+        List<Account> accounts = accountServices.listOfAccounts(currentUser);
+        List<User> users = userService.listOfUsers(currentUser);
+
+        //list all accounts to choose from?? Or add account being sent to
+        consoleService.promptForInt("Choose an account to request from ");
+
+
+        //pull account being sent to
+        int requestingUserId = consoleService.selectUser(users);
+        int amountToRequest = consoleService.amountToRequest(requestingUserId);
+        Account requestingAccount = accountServices.getAccount(currentUser, requestnigUserId);
+
+        BigDecimal currentUserAccount = currentAccount.getBalance();
+        //do we need to check the requesting account? Could possibly auto decline for insufficient funds?
+        BigDecimal requestingUserAccount = requestingAccount.getBalance();
+
+        //set status to pending (=1)  What is the transfer type?
+        Transfer transfer = new Transfer(1, 1, currentAccount.getAccountId(),
+                requestingUserAccount.getAccountId(), BigDecimal.valueOf(amountToRequest));
+
+        transfer.setTransferId(transferService.saveTransfer(transfer, currentUser));
 
     }
 
