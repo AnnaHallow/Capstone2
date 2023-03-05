@@ -44,21 +44,20 @@ public class TransferService {
         return transfers;
     }
 
-    public int saveTransfer(Transfer transferToUpdate, AuthenticatedUser authenticatedUser) {
+    public void saveTransfer(Transfer transferToUpdate, AuthenticatedUser authenticatedUser) {
         int id = 0;
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set("Authorization", "Bearer " + authenticatedUser.getToken());
             HttpEntity<Transfer> entity = new HttpEntity<>(transferToUpdate, headers);
-            Transfer a = restTemplate.exchange(API_BASE_URL + "transfer/savetransfer/",
+           restTemplate.exchange(API_BASE_URL + "transfer/savetransfer/",
                     HttpMethod.POST, entity, Transfer.class).getBody();
-            id = a.getTransferId();
+
         } catch (RestClientResponseException e) {
             BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
         } catch (ResourceAccessException e) {
             BasicLogger.log(e.getMessage());
         }
-            return id;
     }
 }

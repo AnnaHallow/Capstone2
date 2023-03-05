@@ -73,4 +73,7 @@ public class AccountServices {
         }
     }
 
+    public void transactionComplete(Account currentAccount) {
+        System.out.println("\nTransaction Complete\n\nNew Account Balance: " + currentAccount.getBalance());
+    }
 }

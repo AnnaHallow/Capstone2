@@ -28,9 +28,6 @@ public class User {
    private String password;
 
    @Transient
-   private boolean activated;
-
-   @Transient
    private Set<Authority> authorities = new HashSet<>();
 
    public User() { }
@@ -40,7 +37,6 @@ public class User {
       this.username = username;
       this.password = password;
       if(authorities != null) this.setAuthorities(authorities);
-      this.activated = true;
    }
 
    public int getId() {
@@ -67,14 +63,6 @@ public class User {
       this.password = password;
    }
 
-   public boolean isActivated() {
-      return activated;
-   }
-
-   public void setActivated(boolean activated) {
-      this.activated = activated;
-   }
-
    public Set<Authority> getAuthorities() {
       return authorities;
    }
@@ -96,7 +84,6 @@ public class User {
       if (o == null || getClass() != o.getClass()) return false;
       User user = (User) o;
       return id == user.id &&
-              activated == user.activated &&
               Objects.equals(username, user.username) &&
               Objects.equals(password, user.password) &&
               Objects.equals(authorities, user.authorities);
@@ -104,7 +91,7 @@ public class User {
 
    @Override
    public int hashCode() {
-      return Objects.hash(id, username, password, activated, authorities);
+      return Objects.hash(id, username, password,authorities);
    }
 
    @Override
@@ -112,7 +99,6 @@ public class User {
       return "User{" +
               "id=" + id +
               ", username='" + username + '\'' +
-              ", activated=" + activated +
               ", authorities=" + authorities +
               '}';
    }

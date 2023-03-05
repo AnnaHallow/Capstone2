@@ -24,7 +24,7 @@ public class TransferController {
 		return transferService.getHistory(accountId);
 	}
 
-	@PostMapping("/addtransfer")
+	@PostMapping("/savetransfer")
 	public Transfer addTransfer(@RequestBody TransferRequest transferRequest){
 		return transferService.saveTransfer(transferRequest);
 	}
