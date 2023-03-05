@@ -20,7 +20,6 @@ public class App {
     private final AuthenticationService authenticationService = new AuthenticationService(API_BASE_URL);
 
     private AuthenticatedUser currentAuthenticatedUser;
-    private User currentUser = userService.
     private Account currentAccount;
     private TransferService transferService = new TransferService();
     private AccountServices accountServices = new AccountServices();
