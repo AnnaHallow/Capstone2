@@ -33,4 +33,9 @@ public class AccountController {
 		return accountService.saveAccount(account);
 	}
 
+	@GetMapping("/getaccountbyaccountid/{accountId}")
+	public Account getAccountByAccountId(@PathVariable int accountId){
+		return accountService.getAccountByAccountId(accountId);
+	}
+
 }

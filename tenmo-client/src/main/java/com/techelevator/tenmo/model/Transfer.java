@@ -72,12 +72,11 @@ public class Transfer {
 
     @Override
     public java.lang.String toString() {
-        return "Transfer " + transferId + ":" +
-                ", transferTypeId=" + transferTypeId +
-                ", transferStatusId=" + transferStatusId +
-                ", accountFrom=" + accountFrom +
-                ", accountTo=" + accountTo +
-                ", amount=" + amount +
-                '}';
+        return  "\nTransfer ID: " + transferId +
+                "\nTransfer Type Id: " + transferTypeId +
+                "\nTransfer Status Id: " + transferStatusId +
+                "\nAccount From: " + accountFrom +
+                "\nAccount To: " + accountTo +
+                "\nAmount: " + amount;
     }
 }

@@ -44,4 +44,19 @@ public class TransferService {
 		return transferRepository.save(transfer);
 	}
 
+	public Transfer getTransfer(int transferId){
+		return transferRepository.findByTransferId(transferId);
+	}
+
+	public List<Transfer> getPendingOutgoing(int accountFrom){
+		return transferRepository
+				.findAllByTransferStatusIdAndTransferTypeIdAndAccountFrom(1, 1, accountFrom);
+	}
+
+	public List<Transfer> getPendingIncoming(int accountTo){
+		return transferRepository
+				.findAllByTransferStatusIdAndTransferTypeIdAndAccountTo(1, 1, accountTo);
+
+	}
+
 }

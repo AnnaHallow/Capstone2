@@ -11,6 +11,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class AccountServices {
@@ -35,6 +36,21 @@ public class AccountServices {
             HttpEntity<Object> entity = authenticationService.getHeaders(currentUser);
             currentAccount = restTemplate.exchange(API_BASE_URL + "account/getaccount/" +
                     currentUser.getUser().getId(), HttpMethod.GET, entity, Account.class).getBody();
+        } catch (RestClientResponseException e) {
+            BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
+        } catch (ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return currentAccount;
+    }
+
+    public Account getAccountByAccountId(AuthenticatedUser currentUser, int accountId){
+        Account currentAccount = null;
+
+        try {
+            HttpEntity<Object> entity = authenticationService.getHeaders(currentUser);
+            currentAccount = restTemplate.exchange(API_BASE_URL + "account/getaccountbyaccountid/" +
+                    accountId, HttpMethod.GET, entity, Account.class).getBody();
         } catch (RestClientResponseException e) {
             BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
         } catch (ResourceAccessException e) {
@@ -75,5 +91,17 @@ public class AccountServices {
 
     public void transactionComplete(Account currentAccount) {
         System.out.println("\nTransaction Complete\n\nNew Account Balance: " + currentAccount.getBalance());
+    }
+
+    public Account processTransactionsSent(Account currentAccount, double amountToSend){
+        BigDecimal currentUserBalance = currentAccount.getBalance();
+        currentAccount.setBalance(currentUserBalance.subtract(BigDecimal.valueOf(amountToSend)));
+        return currentAccount;
+    }
+
+    public Account processTransactionReceived(Account receivingAccount, double amountToSend){
+        BigDecimal receivingUserBalance = receivingAccount.getBalance();
+        receivingAccount.setBalance(receivingUserBalance.add(BigDecimal.valueOf(amountToSend)));
+        return receivingAccount;
     }
 }

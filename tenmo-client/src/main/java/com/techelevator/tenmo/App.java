@@ -101,8 +101,10 @@ public class App {
             } else if (menuSelection == 3) {
                 viewPendingRequests();
             } else if (menuSelection == 4) {
-                sendBucks();
+                searchForTransfer();
             } else if (menuSelection == 5) {
+                sendBucks();
+            } else if (menuSelection == 6) {
                 requestBucks();
             } else if (menuSelection == 0) {
                 continue;
@@ -151,19 +153,21 @@ public class App {
          * Send accountId / account_id
          *
          * */
-        List<Transfer> pending = null;
-        List<Transfer> all = transferService.viewTransferHistory(currentAuthenticatedUser, currentAccount);
-        for (Transfer transfer : all) {
-            if (transfer.getTransferStatusId() == 1) {
-                pending.add(transfer);
+        //Incoming Requests Cannot be approved by logged in user
+        List<Transfer> incoming = transferService.getPendingIncoming(currentAuthenticatedUser, currentAccount);
+        //Outgoing Requests to be approved by logged in user
+        List<Transfer> outgoing = transferService.getPendingOutgoing(currentAuthenticatedUser, currentAccount);
 
-            }
-        }
-        consoleService.printTransferHistory(pending);
+        List<Transfer> updatedOutgoing = consoleService.handlePendingOutgoing(outgoing, currentAuthenticatedUser,
+                accountServices, transferService);
+
+        consoleService.printIncomingPending(incoming);
+        consoleService.printOutgoingPending(outgoing);
     }
 
+
     //Sophie
-    private void sendBucks() {
+    public void sendBucks() {
         // TODO Auto-generated method stub
         /* reducing current account
             Send Current accountId
@@ -193,14 +197,11 @@ public class App {
         if (amountToSend > 0) {
             Account receivingAccount = accountServices.getAccount(currentAuthenticatedUser, receivingUserId);
 
-            BigDecimal currentUserBalance = currentAccount.getBalance();
-            BigDecimal receivingUserBalance = receivingAccount.getBalance();
+            Account updatedCurrentAccount = accountServices.processTransactionsSent(currentAccount, amountToSend);
+            Account updatedReceivingAccount = accountServices.processTransactionReceived(receivingAccount,amountToSend);
 
-            currentAccount.setBalance(currentUserBalance.subtract(BigDecimal.valueOf(amountToSend)));
-            receivingAccount.setBalance(receivingUserBalance.add(BigDecimal.valueOf(amountToSend)));
-
-            accountServices.updateAccount(currentAccount, currentAuthenticatedUser);
-            accountServices.updateAccount(receivingAccount, currentAuthenticatedUser);
+            accountServices.updateAccount(updatedCurrentAccount, currentAuthenticatedUser);
+            accountServices.updateAccount(updatedReceivingAccount, currentAuthenticatedUser);
 
             Transfer transfer = new Transfer(2, 2, currentAccount.getAccountId(),
                     receivingAccount.getAccountId(), BigDecimal.valueOf(amountToSend));
@@ -248,6 +249,12 @@ public class App {
 
         accountServices.transactionComplete(currentAccount);
 
+    }
+
+    public void searchForTransfer(){
+        int transferID = consoleService.promptForInt("Please enter the transfer ID: ");
+        Transfer transfer = transferService.getTransfer(transferID, currentAuthenticatedUser);
+        consoleService.printTransfer(transfer);
     }
 
 

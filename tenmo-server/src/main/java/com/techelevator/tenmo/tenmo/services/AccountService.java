@@ -26,4 +26,8 @@ public class AccountService {
 	public List<Account> getAccounts() {
 		return accountRepository.findAll();
 	}
+
+	public Account getAccountByAccountId(int accountId) {
+		return accountRepository.findByAccountId(accountId);
+	}
 }

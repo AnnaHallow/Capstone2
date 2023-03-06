@@ -15,4 +15,11 @@ public interface TransferRepository extends JpaRepository<Transfer, Integer> {
 	List<Transfer> findAllByAccountFromAndTransferStatusId(int accountFrom, int transferStatusId);
 
 	List<Transfer> findAllByAccountToAndTransferStatusId(int accountTo, int transferStatusId);
+
+	List<Transfer> findAllByTransferStatusIdAndTransferTypeIdAndAccountFrom(int transferStatus, int transferType, int accountFrom);
+
+	List<Transfer> findAllByTransferStatusIdAndTransferTypeIdAndAccountTo(int transferStatus, int transferType, int accountTo);
+
+	Transfer findByTransferId(int transferId);
+
 }

@@ -1,15 +1,19 @@
 package com.techelevator.tenmo.services;
 
 
+import com.techelevator.tenmo.App;
 import com.techelevator.tenmo.model.*;
 
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleService {
 
     private final Scanner scanner = new Scanner(System.in);
+//    private final AccountServices accountServices = new AccountServices();
+//    private final TransferService transferService = new TransferService();
 
     public int promptForMenuSelection(String prompt) {
         int menuSelection;
@@ -41,8 +45,9 @@ public class ConsoleService {
         System.out.println("1: View your current balance");
         System.out.println("2: View your past transfers");
         System.out.println("3: View your pending requests");
-        System.out.println("4: Send TE bucks");
-        System.out.println("5: Request TE bucks");
+        System.out.println("4: Search for Transfer by ID");
+        System.out.println("5: Send TE bucks");
+        System.out.println("6: Request TE bucks");
         System.out.println("0: Exit");
         System.out.println();
     }
@@ -185,6 +190,49 @@ public class ConsoleService {
             if (holding > 0) {
                 return holding;
             }
+        }
+    }
+
+    public void printTransfer(Transfer transfer) {
+        System.out.println(transfer.toString());
+    }
+
+    public List<Transfer> handlePendingOutgoing(List<Transfer> outgoing, AuthenticatedUser currentUser,
+                                                AccountServices accountServices, TransferService transferService) {
+
+        for (Transfer x: outgoing) {
+            System.out.println(x.toString());
+            int choice = promptForInt("1. Approve\n2. Reject\n3. Skip");
+            if (choice == 1){
+                Account accountSending = accountServices.getAccountByAccountId(currentUser, x.getAccountFrom());
+                Account accountReceiving = accountServices.getAccountByAccountId(currentUser, x.getAccountTo());
+                accountServices.processTransactionsSent(accountSending, x.getAmount().doubleValue());
+                accountServices.processTransactionReceived(accountReceiving, x.getAmount().doubleValue());
+                x.setTransferStatusId(2);
+                transferService.updateTransfer(x, currentUser);
+                accountServices.transactionComplete(accountSending);
+
+            } else if (choice == 2) {
+                x.setTransferStatusId(3);
+                transferService.updateTransfer(x, currentUser);
+                System.out.println("Transfer Request Denied");
+//                outgoing.remove(x);
+            }
+        }
+        return outgoing;
+    }
+
+    public void printIncomingPending(List<Transfer> incoming) {
+        System.out.println("\nYour Pending Requests\n");
+        for (Transfer x: incoming) {
+            System.out.println(x.toString());
+        }
+    }
+
+    public void printOutgoingPending(List<Transfer> outgoing) {
+        System.out.println("\nRequests Awaiting Approval");
+        for (Transfer x: outgoing) {
+            System.out.println(x.toString());
         }
     }
 }
