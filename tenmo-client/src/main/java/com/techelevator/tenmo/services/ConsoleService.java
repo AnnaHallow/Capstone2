@@ -6,6 +6,7 @@ import com.techelevator.tenmo.model.*;
 
 import java.math.BigDecimal;
 import java.sql.SQLOutput;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -199,7 +200,6 @@ public class ConsoleService {
 
     public List<Transfer> handlePendingOutgoing(List<Transfer> outgoing, AuthenticatedUser currentUser,
                                                 AccountServices accountServices, TransferService transferService) {
-
         for (Transfer x: outgoing) {
             System.out.println(x.toString());
             int choice = promptForInt("1. Approve\n2. Reject\n3. Skip");
@@ -210,13 +210,15 @@ public class ConsoleService {
                 accountServices.processTransactionReceived(accountReceiving, x.getAmount().doubleValue());
                 x.setTransferStatusId(2);
                 transferService.updateTransfer(x, currentUser);
+                accountServices.updateAccount(accountSending, currentUser);
+                accountServices.updateAccount(accountReceiving, currentUser);
                 accountServices.transactionComplete(accountSending);
+
 
             } else if (choice == 2) {
                 x.setTransferStatusId(3);
                 transferService.updateTransfer(x, currentUser);
                 System.out.println("Transfer Request Denied");
-//                outgoing.remove(x);
             }
         }
         return outgoing;

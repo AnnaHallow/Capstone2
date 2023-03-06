@@ -158,11 +158,12 @@ public class App {
         //Outgoing Requests to be approved by logged in user
         List<Transfer> outgoing = transferService.getPendingOutgoing(currentAuthenticatedUser, currentAccount);
 
-        List<Transfer> updatedOutgoing = consoleService.handlePendingOutgoing(outgoing, currentAuthenticatedUser,
+        consoleService.handlePendingOutgoing(outgoing, currentAuthenticatedUser,
                 accountServices, transferService);
+        List<Transfer> updatedOutgoing = transferService.getPendingOutgoing(currentAuthenticatedUser,currentAccount);
 
         consoleService.printIncomingPending(incoming);
-        consoleService.printOutgoingPending(outgoing);
+        consoleService.printOutgoingPending(updatedOutgoing);
     }
 
 
