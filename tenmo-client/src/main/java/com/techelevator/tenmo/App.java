@@ -29,12 +29,12 @@ public class App {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         App app = new App();
         app.run();
     }
 
-    private void run() {
+    private void run()  {
         consoleService.printGreeting();
         loginMenu();
         if (currentAuthenticatedUser != null) {
@@ -72,6 +72,9 @@ public class App {
         currentAuthenticatedUser = authenticationService.login(credentials);
         if (currentAuthenticatedUser == null) {
             consoleService.printErrorMessage();
+            //Anne
+            //Once a user has been authenticated and a token has been obtained, the logged in users account is pulled
+            //from the database for usage
         } else {
             try {
                 HttpEntity<Object> entity = authenticationService.getHeaders(currentAuthenticatedUser);
@@ -83,13 +86,10 @@ public class App {
                 BasicLogger.log(e.getMessage());
             }
 
-
-//           Account currentAccount = accountServices.getAccount(currentUser);
-
         }
     }
 
-    private void mainMenu() {
+    private void mainMenu()  {
         int menuSelection = -1;
         while (menuSelection != 0) {
             consoleService.printMainMenu();
@@ -114,10 +114,7 @@ public class App {
             consoleService.pause();
         }
     }
-
-
     //Anne
-    //**this needs an else statement
 	private void viewCurrentBalance() {
 
         if (currentAccount.getBalance() != null) {
@@ -128,13 +125,9 @@ public class App {
     }
 
     //Sophie
+    //The transfer history shows past transactions and does not show transactions that are pending
     private void viewTransferHistory() {
-        // TODO Auto-generated method stub
-        //Need a List<Transfer> from API
-        //Send accountId/ account_id
-        //Will require checking accountTo and accountFrom
-        //add JWD token
-        //throw in transfer service class
+
         List<Transfer> transfers = transferService.viewTransferHistory(currentAuthenticatedUser, currentAccount);
 
         if(transfers != null && !transfers.isEmpty()) {
@@ -145,21 +138,15 @@ public class App {
 
     }
 
-    //Anne
+    //Curtis Anne Sophie - Displays pending requests and asks for approval for incoming requests
     private void viewPendingRequests() {
-        // TODO Auto-generated method stub
-        /*
-         * Need List<Transfer> where transferStatusId = 1
-         * Send accountId / account_id
-         *
-         * */
-        //Incoming Requests Cannot be approved by logged in user
+
         List<Transfer> incoming = transferService.getPendingIncoming(currentAuthenticatedUser, currentAccount);
         //Outgoing Requests to be approved by logged in user
         List<Transfer> outgoing = transferService.getPendingOutgoing(currentAuthenticatedUser, currentAccount);
 
         consoleService.handlePendingOutgoing(outgoing, currentAuthenticatedUser,
-                accountServices, transferService);
+                accountServices, transferService, currentAccount);
         List<Transfer> updatedOutgoing = transferService.getPendingOutgoing(currentAuthenticatedUser,currentAccount);
 
         consoleService.printIncomingPending(incoming);
@@ -169,26 +156,7 @@ public class App {
 
     //Sophie
     public void sendBucks() {
-        // TODO Auto-generated method stub
-        /* reducing current account
-            Send Current accountId
-                Receiving   accountId
-                amount being sent
-                build the Transfer obj - everything but ID
-                Display -> List of users to choose from
-                Have them select by UserID with Username (to grab that user, user there accountID)
-                use the promptForInt method consoleService (add in the string of what you ask for to use this method,
-                it will return an int)
-                With the accountID create account obj and call API to get users account
-                After grabbing account from API, set 'accountTo' to the accountId pulled
-                AccountFrom is already in method(currentUser Account)
-                This is stored in currentAccount.getId
 
-                Endpoint /account/GetUsernames
-                foreach iterate through the list != currentUser.equals(currentUser.getUsername)
-                send and get response - "How much do you want to send?"
-                Don't forget - before ending method, reduce and increase both accounts.
-         */
         int receivingUserId = 0;
         List<User> users = userService.listOfUsers(currentAuthenticatedUser);
         while(receivingUserId == 0){
@@ -218,7 +186,6 @@ public class App {
     //Anne
     private void requestBucks() {
 
-        // pull current account
         int requestingUserId = 0;
         List<User> users = userService.listOfUsers(currentAuthenticatedUser);
 
@@ -226,22 +193,8 @@ public class App {
         while(requestingUserId == 0){
             requestingUserId = consoleService.selectUser(users, currentAuthenticatedUser.getUser());
         }
-
-
         double amountToRequest = consoleService.amountToRequest(requestingUserId);
         Account requestingAccount = accountServices.getAccount(currentAuthenticatedUser, requestingUserId);
-
-        BigDecimal currentUserBalance = currentAccount.getBalance();
-        //do we need to check the requesting account? Could possibly auto decline for insufficient funds?
-        BigDecimal requestingUserBalance = requestingAccount.getBalance();
-
-        //set status to pending (=1)  What is the transfer type?
-        //**Transfer Typre Request is 1 also
-        //** Your accounts are backward here the first account should be who the money is coming from
-        // and the second account should be who the money is going to
-        //** you could wrap this is an if statement...if requesting amount is > 0
-        // AND requestingAmount is lessthan requestingAccount.getBalance
-        //and throw an else saying the target users account balance dows not support this transaction or something to that effect.
 
         Transfer transfer = new Transfer(1, 1, requestingAccount.getAccountId(),
                 currentAccount.getAccountId(), BigDecimal.valueOf(amountToRequest));
@@ -249,17 +202,16 @@ public class App {
         transferService.saveTransfer(transfer, currentAuthenticatedUser);
 
         accountServices.transactionComplete(currentAccount);
-
     }
 
-    public void searchForTransfer(){
+    public void searchForTransfer() {
         int transferID = consoleService.promptForInt("Please enter the transfer ID: ");
         Transfer transfer = transferService.getTransfer(transferID, currentAuthenticatedUser);
-        consoleService.printTransfer(transfer);
+
+        if (transfer != null) {
+            consoleService.printTransfer(transfer);
+        } else {
+            System.out.println("No Transaction Found with ID: " + transferID);
+        }
     }
-
-
-
-
-
 }

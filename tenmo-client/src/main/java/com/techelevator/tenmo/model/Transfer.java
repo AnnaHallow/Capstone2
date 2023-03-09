@@ -72,9 +72,27 @@ public class Transfer {
 
     @Override
     public java.lang.String toString() {
+
+        String transferTypeIdWords;
+        String transferStatusIdWords;
+
+        if (transferTypeId == 1){
+            transferTypeIdWords = "Request";
+        } else {
+            transferTypeIdWords = "Send";
+        }
+
+        if (transferStatusId == 1){
+            transferStatusIdWords = "Pending";
+        } else if (transferStatusId == 2) {
+            transferStatusIdWords = "Approved";
+        } else {
+            transferStatusIdWords = "Rejected";
+        }
+
         return  "\nTransfer ID: " + transferId +
-                "\nTransfer Type Id: " + transferTypeId +
-                "\nTransfer Status Id: " + transferStatusId +
+                "\nTransfer Type Id: " + transferTypeIdWords +
+                "\nTransfer Status Id: " + transferStatusIdWords +
                 "\nAccount From: " + accountFrom +
                 "\nAccount To: " + accountTo +
                 "\nAmount: " + amount;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+//database interaction interface for account
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 

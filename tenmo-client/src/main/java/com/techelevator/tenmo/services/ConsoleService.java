@@ -1,20 +1,15 @@
 package com.techelevator.tenmo.services;
 
 
-import com.techelevator.tenmo.App;
 import com.techelevator.tenmo.model.*;
 
 import java.math.BigDecimal;
-import java.sql.SQLOutput;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleService {
 
     private final Scanner scanner = new Scanner(System.in);
-//    private final AccountServices accountServices = new AccountServices();
-//    private final TransferService transferService = new TransferService();
 
     public int promptForMenuSelection(String prompt) {
         int menuSelection;
@@ -199,42 +194,73 @@ public class ConsoleService {
     }
 
     public List<Transfer> handlePendingOutgoing(List<Transfer> outgoing, AuthenticatedUser currentUser,
-                                                AccountServices accountServices, TransferService transferService) {
-        for (Transfer x: outgoing) {
+                                                AccountServices accountServices, TransferService transferService, Account currentAccount) {
+        boolean failedTransaction = false;
+        int failedCounter = 0;
+
+        for (Transfer x : outgoing) {
             System.out.println(x.toString());
             int choice = promptForInt("1. Approve\n2. Reject\n3. Skip");
-            if (choice == 1){
+            failedTransaction = false;
+            if (choice == 1) {
                 Account accountSending = accountServices.getAccountByAccountId(currentUser, x.getAccountFrom());
                 Account accountReceiving = accountServices.getAccountByAccountId(currentUser, x.getAccountTo());
-                accountServices.processTransactionsSent(accountSending, x.getAmount().doubleValue());
-                accountServices.processTransactionReceived(accountReceiving, x.getAmount().doubleValue());
-                x.setTransferStatusId(2);
-                transferService.updateTransfer(x, currentUser);
-                accountServices.updateAccount(accountSending, currentUser);
-                accountServices.updateAccount(accountReceiving, currentUser);
-                accountServices.transactionComplete(accountSending);
+                if (currentAccount.getBalance().compareTo(x.getAmount()) < 0) {
+                    System.out.println("\nYou do not have enough to approve this transaction");
+                    failedTransaction = true;
+                    failedCounter++;
 
-
+                } else {
+                    accountServices.processTransactionsSent(accountSending, x.getAmount().doubleValue());
+                    accountServices.processTransactionReceived(accountReceiving, x.getAmount().doubleValue());
+                    x.setTransferStatusId(2);
+                    transferService.updateTransfer(x, currentUser);
+                    accountServices.updateAccount(accountSending, currentUser);
+                    accountServices.updateAccount(accountReceiving, currentUser);
+                    accountServices.transactionComplete(accountSending);
+                }
             } else if (choice == 2) {
                 x.setTransferStatusId(3);
                 transferService.updateTransfer(x, currentUser);
                 System.out.println("Transfer Request Denied");
             }
         }
+        if (failedTransaction && failedCounter > 1) {
+            System.out.println("\nYou had " + failedCounter +" failed request approvals due to insufficient funds");
+            promptEnterKey();
+        } else if (failedTransaction && failedCounter <= 1) {
+            System.out.println("\nYou had 1 failed request approval due to insufficient funds.");
+            promptEnterKey();
+        }
         return outgoing;
     }
 
+    private void promptEnterKey() {
+        System.out.println("\nPress \"ENTER\" to view a list of remaining pending transactions...");
+        scanner.nextLine();
+    }
+
     public void printIncomingPending(List<Transfer> incoming) {
-        System.out.println("\nYour Pending Requests\n");
-        for (Transfer x: incoming) {
-            System.out.println(x.toString());
+        System.out.println("\nYour Pending Requests:\n");
+        if(incoming.isEmpty()){
+            System.out.println("You have no outgoing requests for TEbucks pending.");
+        } else{
+            for (Transfer x: incoming) {
+                System.out.println(x.toString());
+            }
         }
+
     }
 
     public void printOutgoingPending(List<Transfer> outgoing) {
-        System.out.println("\nRequests Awaiting Approval");
-        for (Transfer x: outgoing) {
-            System.out.println(x.toString());
+        System.out.println("\nRequests Awaiting Approval:");
+        if(outgoing.isEmpty()){
+            System.out.println("\nYou have no pending requests awaiting approval.");
+        } else{
+            for (Transfer x: outgoing) {
+                System.out.println(x.toString());
+            }
         }
+
     }
 }

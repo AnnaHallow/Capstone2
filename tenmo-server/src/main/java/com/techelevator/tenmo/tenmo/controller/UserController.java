@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
+//controller to interact with data persisting in tenmo_user
 @RestController
 @PreAuthorize("isAuthenticated()")
 @RequestMapping(value = "user/")

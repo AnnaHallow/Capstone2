@@ -5,7 +5,7 @@ import com.techelevator.tenmo.tenmo.repositories.AccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+//carriers the workload of the AccountController
 @Service
 public class AccountService {
 

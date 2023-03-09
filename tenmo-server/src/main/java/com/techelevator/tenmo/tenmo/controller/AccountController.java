@@ -6,7 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+ //Controller to interact with data persisting in account
 @RestController
 @PreAuthorize("isAuthenticated()")
 @RequestMapping(value = "/account")

@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+//controller to interact with data persisting in transfer
 @RestController
 @PreAuthorize("isAuthenticated()")
 @RequestMapping(value = "/transfer")

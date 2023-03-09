@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+//Carries the workload of the TransferController
 @Service
 public class TransferService {
 
