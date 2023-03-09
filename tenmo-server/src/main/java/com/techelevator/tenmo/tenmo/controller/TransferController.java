@@ -49,6 +49,11 @@ public class TransferController {
 		return transferService.getTransfer(transferId);
 	}
 
+	@GetMapping("/gettransfer/{accountId}/{transferId}")
+	public Transfer getTransferFromAccount(@PathVariable int accountId, @PathVariable int transferId){
+		return transferService.getTransferFromAccount(accountId, transferId);
+	}
+
 	@GetMapping("/pendingoutgoing/{accountFrom}")
 	public List<Transfer> getPendingOutgoing(@PathVariable int accountFrom){
 		return transferService.getPendingOutgoing(accountFrom);

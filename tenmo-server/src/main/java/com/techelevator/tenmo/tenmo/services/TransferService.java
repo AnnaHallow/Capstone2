@@ -60,4 +60,8 @@ public class TransferService {
 
 	}
 
+	public Transfer getTransferFromAccount(int accountId, int transferId) {
+		return transferRepository
+				.findAllByAccountFromAndTransferId(accountId, transferId);
+	}
 }

@@ -22,4 +22,7 @@ public interface TransferRepository extends JpaRepository<Transfer, Integer> {
 
 	Transfer findByTransferId(int transferId);
 
+	Transfer findByAccountFromAndTransferId(int accountId, int transferId);
+
+	Transfer findAllByAccountFromAndTransferId(int accountId, int transferId);
 }

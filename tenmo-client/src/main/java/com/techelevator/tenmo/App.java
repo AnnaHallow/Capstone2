@@ -206,12 +206,14 @@ public class App {
 
     public void searchForTransfer() {
         int transferID = consoleService.promptForInt("Please enter the transfer ID: ");
-        Transfer transfer = transferService.getTransfer(transferID, currentAuthenticatedUser);
+        Transfer transfer = transferService.getTransfer(transferID, currentAuthenticatedUser, currentAccount);
 
-        if (transfer != null) {
+        if (transfer != null
+                && (transfer.getAccountFrom() == currentAccount.getAccountId())
+                || transfer.getAccountTo() == currentAccount.getAccountId()) {
             consoleService.printTransfer(transfer);
         } else {
-            System.out.println("No Transaction Found with ID: " + transferID);
+            System.out.println("No Transaction Found with ID " + transferID + " belonging to this account.");
         }
     }
 }

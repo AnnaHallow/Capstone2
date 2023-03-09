@@ -11,7 +11,6 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class TransferService {
     private static final String API_BASE_URL = "http://localhost:8080/";
@@ -50,7 +49,7 @@ public class TransferService {
         }
     }
 
-    public Transfer getTransfer(int transferId, AuthenticatedUser currentUser) {
+    public Transfer getTransfer(int transferId, AuthenticatedUser currentUser, Account currentAccount) {
         Transfer transfer = null;
 
         try {
